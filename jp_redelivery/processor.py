@@ -39,6 +39,8 @@ def process_orders(orders: list[dict], token: str) -> None:
         if driver is None:
             opts = webdriver.ChromeOptions()
             opts.add_argument("--headless=new")
+            chrome_bin = os.getenv("CHROME_BIN", "/usr/bin/chromium-browser")
+            opts.binary_location = chrome_bin
             driver = webdriver.Chrome(options=opts)
 
         print(f">> Xử lý ID={idv}, slot={khung}")
