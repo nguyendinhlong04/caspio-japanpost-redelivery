@@ -6,6 +6,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 
 from selenium import webdriver
+import os
 
 from .japanpost import open_and_fill
 from .caspio_api import update_order
@@ -39,6 +40,8 @@ def process_orders(orders: list[dict], token: str) -> None:
         if driver is None:
             opts = webdriver.ChromeOptions()
             opts.add_argument("--headless=new")
+            opts.add_argument("--no-sandbox")     
+            opts.add_argument("--disable-gpu")     
             chrome_bin = os.getenv("CHROME_BIN", "/usr/bin/chromium-browser")
             opts.binary_location = chrome_bin
             driver = webdriver.Chrome(options=opts)
