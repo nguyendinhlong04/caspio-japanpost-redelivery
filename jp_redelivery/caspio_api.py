@@ -15,7 +15,7 @@ from .config import CASPIO_BASE_URL, CASPIO_CLIENT_ID, CASPIO_CLIENT_SECRET, CAS
 
 # Ánh xạ khung giờ dùng khi click trên Japan Post
 SLOT_MAP: Dict[str, str] = {
-    "午前中(8～12時)": "午前中(8～12時)",
+    "午前中 (Buổi sáng)": "午前中(8～12時)",
     "１２－１４時": "12～14時",
     "１４－１６時": "14～16時",
     "１６－１８時": "16～18時",
