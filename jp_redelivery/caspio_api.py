@@ -37,17 +37,22 @@ def get_access_token() -> str:
     return res.json()["access_token"]
 
 
+
 def fetch_orders(token: str) -> List[Dict[str, Any]]:
-    query = {
-        "where": "tinh_trang_van_chuyen='Vắng nhà'",
-        "orderBy": "ngay_dat DESC"
-    }
-    qs = urllib.parse.quote_plus(json.dumps(query))
-    url = f"{CASPIO_BASE_URL}/rest/v2/tables/{CASPIO_TABLE_NAME}/records?q={qs}"
+    where_clause = "tinh_trang_van_chuyen='Vắng nhà'"
+    
+    encoded_where = urllib.parse.quote(where_clause)
+    
+    url = f"{CASPIO_BASE_URL}/rest/v2/tables/{CASPIO_TABLE_NAME}/records?where={encoded_where}"
+    
+    print(f"DEBUG: Requesting URL: {url}")
+    
     res = requests.get(url, headers={"Authorization": f"Bearer {token}"})
     res.raise_for_status()
+    
+    print(f"DEBUG: API Response: {res.text}") 
+    
     return res.json().get("Result", [])
-
 
 def update_order(token: str, id_value: str | int, first_selected: bool) -> None:
     tz = timezone(timedelta(hours=9))
